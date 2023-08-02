@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.nateplugins.natepieshells.natepieshells;
+package net.runelite.client.plugins.nateplugins.natewinemaker;
 
 import com.google.inject.Provides;
 import lombok.extern.slf4j.Slf4j;
@@ -20,17 +20,17 @@ import static net.runelite.client.plugins.natepainthelper.Info.*;
 
 
 @PluginDescriptor(
-        name = "Nate's Pie Shell Maker",
-        description = "Nate's Pie Shell Maker",
-        tags = {"MoneyMaking", "nate", "pies"},
+        name = "Nate's Wine Maker",
+        description = "Nate's Wine Maker",
+        tags = {"skilling", "nate", "wine","cooking"},
         enabledByDefault = false
 )
 @Slf4j
-public class PiePlugin extends Plugin {
+public class WinePlugin extends Plugin {
     @Inject
     private Client client;
     @Inject
-    private PieConfig config;
+    private WineConfig config;
     @Inject
     private ClientThread clientThread;
     @Inject
@@ -39,14 +39,14 @@ public class PiePlugin extends Plugin {
     @Inject
     private OverlayManager overlayManager;
     @Inject
-    private PieOverlay pieOverlay;
+    private WineOverlay wineOverlay;
 
     @Inject
-    PieScript pieScript;
+    WineScript wineScript;
 
     @Provides
-    PieConfig provideConfig(ConfigManager configManager) {
-        return configManager.getConfig(PieConfig.class);
+    WineConfig provideConfig(ConfigManager configManager) {
+        return configManager.getConfig(WineConfig.class);
     }
 
 
@@ -57,17 +57,17 @@ public class PiePlugin extends Plugin {
         Microbot.setClientThread(clientThread);
         Microbot.setNotifier(notifier);
         Microbot.setMouse(new VirtualMouse());
-        expstarted = Microbot.getClient().getSkillExperience(Skill.MINING);
-        startinglevel = Microbot.getClient().getRealSkillLevel(Skill.MINING);
+        expstarted = Microbot.getClient().getSkillExperience(Skill.COOKING);
+        startinglevel = Microbot.getClient().getRealSkillLevel(Skill.COOKING);
         timeBegan = System.currentTimeMillis();
         if (overlayManager != null) {
-            overlayManager.add(pieOverlay);
+            overlayManager.add(wineOverlay);
         }
-        pieScript.run(config);
+        wineScript.run(config);
     }
 
     protected void shutDown() {
-        pieScript.shutdown();
-        overlayManager.remove(pieOverlay);
+        wineScript.shutdown();
+        overlayManager.remove(wineOverlay);
     }
 }

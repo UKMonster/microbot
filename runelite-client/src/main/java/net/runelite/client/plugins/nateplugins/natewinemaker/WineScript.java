@@ -1,4 +1,4 @@
-package net.runelite.client.plugins.nateplugins.natepieshells.natepieshells;
+package net.runelite.client.plugins.nateplugins.natewinemaker;
 
 import net.runelite.client.plugins.microbot.Microbot;
 import net.runelite.client.plugins.microbot.Script;
@@ -8,21 +8,21 @@ import net.runelite.client.plugins.microbot.util.widget.Rs2Widget;
 
 import java.util.concurrent.TimeUnit;
 
-public class PieScript extends Script {
+public class WineScript extends Script {
 
-    public static double version = 1.2;
+    public static double version = 1.1;
 
-    public boolean run(PieConfig config) {
+    public boolean run(WineConfig config) {
         mainScheduledFuture = scheduledExecutorService.scheduleWithFixedDelay(() -> {
             if (!super.run()) return;
 
             try {
                 if (Microbot.pauseAllScripts) return;
-                if (Inventory.getAmountForItem("pie dish") > 0 && (Inventory.getAmountForItem("pastry dough") > 0)) {
-                    Inventory.useItemOnItem("pie dish", "pastry dough");
+                if (Inventory.getAmountForItem("grapes") > 0 && (Inventory.getAmountForItem("jug of water") > 0)) {
+                    Inventory.useItemOnItem("jug of water", "grapes");
                     sleepUntilOnClientThread(() -> Rs2Widget.getWidget(17694734) != null);
                     keyPress('1');
-                    sleepUntilOnClientThread(() -> !Inventory.hasItem("pie dish"),25000);
+                    sleepUntilOnClientThread(() -> !Inventory.hasItem("jug of water"),25000);
                     return;
                 } else {
                     bank();
@@ -38,11 +38,11 @@ public class PieScript extends Script {
         Rs2Bank.openBank();
         if(Rs2Bank.isOpen()){
             Rs2Bank.depositAll();
-            if(Rs2Bank.hasItem("pie dish") &&  Rs2Bank.hasItem("pastry dough")) {
-                Rs2Bank.withdrawItemX(true, "pie dish", 14);
-                sleepUntilOnClientThread(() -> Inventory.hasItem("pie dish"));
-                Rs2Bank.withdrawItemX(true, "pastry dough", 14);
-                sleepUntilOnClientThread(() -> Inventory.hasItem("pastry dough"));
+            if(Rs2Bank.hasItem("jug of water") &&  Rs2Bank.hasItem("grapes")) {
+                Rs2Bank.withdrawItemX(true, "jug of water", 14);
+                sleepUntilOnClientThread(() -> Inventory.hasItem("jug of water"));
+                Rs2Bank.withdrawItemX(true, "grapes", 14);
+                sleepUntilOnClientThread(() -> Inventory.hasItem("grapes"));
             } else {
                 Microbot.getNotifier().notify("Run out of Materials");
                 shutdown();

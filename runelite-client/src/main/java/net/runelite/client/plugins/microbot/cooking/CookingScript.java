@@ -43,9 +43,13 @@ public class CookingScript extends Script {
 
                 if (!Inventory.isFull() || !Inventory.hasItem(itemToCook)) {
                     if (!Rs2Bank.isOpen()) {
-                        boolean bankIsOnScreen = Rs2Bank.useBank();
+                        //boolean bankIsOnScreen = Rs2Bank.useBank();
+                        boolean bankIsOnScreen = Microbot.getClient().getLocalPlayer().getWorldLocation().distanceTo(BankLocation.AL_KHARID.getWorldPoint()) < 4;
+
                         if (!bankIsOnScreen) {
-                            Rs2Bank.walkToBank();
+                            Microbot.getWalker().walkTo(BankLocation.AL_KHARID.getWorldPoint(), true, false);
+                        } else{
+                            Rs2Bank.useBank();
                         }
                     }
                     if (Rs2Bank.isOpen()) {
